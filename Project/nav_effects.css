@@ -1,0 +1,307 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .navbar {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .sidebar-container {
+    position: relative;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #343a40;
+    color: #fff;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .menu_section {
+    padding: 20px 0;
+  }
+
+  .menu_section h3 {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .side-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .side-menu li {
+    border-bottom: 1px solid #495057;
+  }
+
+  .side-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .side-menu a:hover {
+    background-color: #495057;
+  }
+
+  .nav.child_menu {
+    display: none;
+  }
+
+  .fa {
+    margin-right: 10px;
+  }
+
+  .logo {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+
+  .toggle-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    transition: left 0.3s ease;
+    z-index: 999;
+  }
+
+  .sidebar-hidden {
+    transform: translateX(-250px);
+  }
+
+  .content {
+    padding: 20px;
+    max-width: calc(100% - 250px);
+    margin: 0 auto;
+    transition: margin-left 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .content {
+      max-width: 100%;
+      transition: margin-left 0.3s ease;
+    }
+  }
+
+  .toggle-btn {
+    left: 10px;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+
+  .toggle-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    transition: left 0.3s ease;
+    z-index: 999;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #343a40;
+    color: #fff;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .nav.child_menu {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .nav.child_menu.open {
+    max-height: 200px;
+  }
+  /* navbar_styles.css */
+
+/* Styles for user profile dropdown */
+.user-profile {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+  }
+  
+  .dropdown-menu.pull-right {
+    right: 0;
+    left: auto;
+  }
+  
+  .dropdown-menu.dropdown-usermenu {
+    min-width: 160px;
+  }
+  
+  .dropdown-menu.dropdown-usermenu a {
+    color: #333;
+    padding: 8px 20px;
+    text-decoration: none;
+    display: block;
+    font-weight: 400;
+  }
+  
+  .dropdown-menu.dropdown-usermenu a:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Styles for envelope dropdown */
+  .info-number {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+  }
+  
+  .info-number .badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #dc3545;
+  }
+  
+  .dropdown-menu.msg_list {
+    width: 300px;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .dropdown-menu.msg_list .nav-item {
+    padding: 10px;
+  }
+  
+  .dropdown-menu.msg_list .nav-item .image img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .dropdown-menu.msg_list .nav-item .message {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .navbar {
+    background-color: #333; /* Background color of the navbar */
+    color: white; /* Text color of the navbar */
+    padding: 10px;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333; /* Background color same as navbar */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: white; /* Text color same as navbar */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #555; /* Darker background color on hover */
+  }
+
+  /* Style for user circle */
+  .user-circle {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    width: auto; /* Adjust width as needed */
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 0 10px;
+    background-color: #333; /* Background color same as navbar */
+  }
+  
+  .user-circle img {
+    width: 30px; /* Adjust size of the image */
+    height: 30px; /* Adjust size of the image */
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .user-name {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
