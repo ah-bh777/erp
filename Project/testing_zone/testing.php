@@ -1,8 +1,8 @@
 <?php 
-include("index.php");
+include("../index.php");
 
-$cur_user = $_GET['user'];
-
+$cur_user = "user1";
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +33,10 @@ $cur_user = $_GET['user'];
     </style>
 </head>
 <body>
+
+
+
+  <?php if(!isset($_SESSION['procced_id'])){ ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -95,6 +99,71 @@ $cur_user = $_GET['user'];
                 </div>
             </div>
         </div>
+
+
+
+
+   <?php }else{ 
+$resultSpec = mysqli_query($conn, "SELECT * FROM vente where id = '{$_SESSION['procced_id']}'");
+
+    while($resTarget = mysqli_fetch_array($resultSpec)){
+        $client = $resTarget['client'];
+        $num = $resTarget['num'];
+        $project = $resTarget['projet'];
+        $categorie = $resTarget['categorie'];
+        $description = $resTarget['description'];
+        $statut = $resTarget['statut'];
+    }
+    ?>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fa fa-bars"></i> Tabs <small>Float right</small></h2>
+                    <button class="btn btn-link float-right" id="toggleForm"><i class="fa fa-chevron-up"></i></button>
+                </div>
+                <div class="card-body" id="formCollapse">
+                    <div class="form-row">
+                        <div class="col-md-4 form-group">
+                            <label for="client_client">Client</label>
+                            <input type="text" value="<?= $client ?>" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="categorie_client">Catégorie</label>
+                            <input type="text" value="<?= $categorie ?>" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="projet_client">Projet</label>
+                            <input type="text" value="<?= $project ?>" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="description_client">Description</label>
+                            <input type="text" value="<?= $description ?>" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="num_client">Num</label>
+                            <input type="text" value="<?= $num ?>" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="statut_client">Statut</label>
+                            <input type="text" value="<?= $statut ?>" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <br>
+                    <input type="button" id="save_client" value="Save" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <?php }  ?>
         <div class="row">
           <div class="col-sm-12">
                 <!-- Table -->
@@ -137,9 +206,17 @@ $cur_user = $_GET['user'];
             </div>
         </div>
     </div>
+    
+    <br>
+    <input type="button" value="show the id " onclick="alert('<?php echo isset($_SESSION['procced_id']) ? $_SESSION['procced_id'] : ''; ?>')">
     <br>
 
-    <input type="button" value="alert ids" id="save">
+    <?php 
+    $resultForRows = mysqli_query($conn, "SELECT * FROM vente_article WHERE user = '$cur_user' and statut = 'selection'");
+    $howManyRows = mysqli_num_rows($resultForRows);
+    ?>
+    <input type="button" value="end the session" onclick='endTheSession()' <?php echo ($howManyRows > 0 ? "disabled" : ""); ?>>
+
     <!-- Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -147,68 +224,92 @@ $cur_user = $_GET['user'];
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <!-- DataTables Checkboxes JS -->
     <script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
-   
-   
-   <script>
-$(document).ready(function() {
+    <script>
+
     $("#toggleForm").click(function() {
-        $("#formCollapse").toggleClass("hidden");
-        var icon = $(this).find("i");
-        icon.toggleClass("fa-chevron-up fa-chevron-down");
+    $("#formCollapse").toggleClass("hidden");
+    var icon = $(this).find("i");
+    icon.toggleClass("fa-chevron-up fa-chevron-down");
     });
 
-    $(document).ready(function() {
-        var table = $("#example").DataTable({
-            'columnDefs': [{
-                'targets': 0,
-                'checkboxes': {
-                    'selectRow': true
-                }
-            }],
-            'select': {
-                'style': 'multi'
-            },
-            'order': [[1, 'decs']]
-        });
+    var targets 
 
-        $('#save').on("click", function() {
-            var selected_rows = table.column(0).checkboxes.selected();
-            var selected_ids = [];
-            $.each(selected_rows, function(index, id) {
-                selected_ids.push(id);
-            });
-            alert(JSON.stringify(selected_ids));
-        });
+  
+    window.alertMode = function() {
+        alert(targets);
+    }
 
-        $("#save_client").on("click", function() {
+    var table = $("#example").DataTable({
+        'columnDefs': [{
+            'targets': 0,
+            'checkboxes': {
+                'selectRow': true
+            }
+        }],
+        'select': {
+            'style': 'multi'
+        },
+        'order': [[1, 'desc']]
+    });
+
+    function selectedIds() {
+
+        var selected_rows = table.column(0).checkboxes.selected();
+        var selected_ids = [];
+        $.each(selected_rows, function(index, id) {
+            selected_ids.push(id);
+        });
+        targets = [...selected_ids];
+        alertMode();
+    }
+   
+    $("#save_client").on("click", function() {
+        selectedIds()
+        if(targets.length == 0){
+            alert("select some articles")
+        }else{
         $.ajax({
-            url: "client_request_server.php",
+            url: "server_side.php",
             type: 'POST',
             data: {
+                articles : targets,
                 categorie: $("#categorie_client").val(),
                 client: $("#client_client").val(),
                 num: $("#num_client").val(),
                 projet: $("#projet_client").val(),
                 statut: $("#statut_client").val(),
                 description: $("#description_client").val(),
-                user : "<?= $cur_user ?>"
+                user : "<?= $cur_user ?>",
+                processing_id: "<?php echo isset($_SESSION['procced_id']) ? $_SESSION['procced_id'] : ''; ?>"
             },
             cache: false,
             success: function(data) {
-                alert(data.message); 
-                window.location.href = "theOfficial_modification.php?id_client=" + data.message + "&cur_user=<?= $cur_user ?>";
+                alert(data.rows); 
+                location.reload()
+                //  window.location.href = "theOfficial_modification.php?id_client=" + data.message + "&cur_user=<?= $cur_user ?>";
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
                 alert("An error occurred while processing the request.");
             }
         });
-    });
+    }
+        
     });
 
-});
+    function endTheSession(){
+        location.reload()
+    $.ajax({
+        url : "endSession.php",
+        type : "POST",
+        success : function(data){
+            alert(data)
+        }
+    })
+    
+}
 
-    </script>
+</script>
 </body>
 </html>
 

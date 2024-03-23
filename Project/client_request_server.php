@@ -10,6 +10,7 @@ $statut = $_POST['statut'];
 $description = $_POST['description'];
 $date_creation = date("Y-m-d");
 
+
 $sql = "INSERT INTO vente (`user`,`categorie` ,`client`,`statut`,`num`,`projet`,`description`,`date_creation`) 
 VALUES ('$user','$categorie','$client','$statut','$num','$projet','$description','$date_creation')";
 
